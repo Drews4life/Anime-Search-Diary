@@ -1,28 +1,66 @@
 /** @format */
 import { Navigation } from "react-native-navigation";
-import App from './App';
-import Plus from './src/screens/CounterPlus'
-import Minus from './src/screens/CounterMinus';
+import registerScreens from './src/screens'
 
-import Stores from './src/stores'
-import Provider from './src/utils/MobxRNNProvider';
-//import {name as appName} from './app.json';
+import signIn from './assets/signIn.png'
+import signUp from './assets/signUp.png'
 
-Navigation.registerComponent(`WelcomeScreen`, () => App);
-Navigation.registerComponent(`PlusScreen`, () => Plus, Stores, Provider);
-Navigation.registerComponent(`MinusScreen`, () => Minus, Stores, Provider);
+import IconFeather from 'react-native-vector-icons/Feather' //list / search
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons' //favorite-border
 
-Navigation.events().registerAppLaunchedListener(() => {
-    Navigation.setRoot({
-        root: {
-            stack: {
-                id: 'AppStack',
-                children: [{
+registerScreens()
+
+Promise.all([
+    IconFeather.getImageSource('search', 25),
+    IconFeather.getImageSource('list', 25),
+    IconMaterialIcons.getImageSource('favorite-border', 25)
+])
+    .then(result => {
+
+        Navigation.setRoot({
+            root: {
+              bottomTabs: {
+                id: 'BottomTabsId',
+                children: [
+                  {
                     component: {
-                        name: "WelcomeScreen"
-                    }
-                }]
+                      name: 'Home',
+                      options: {
+                        bottomTab: {
+                          fontSize: 12,
+                          text: 'Anime List',
+                          icon: result[0]
+                        }
+                      }
+                    },
+                  },
+                  {
+                    component: {
+                      name: 'Top',
+                      options: {
+                        bottomTab: {
+                          text: 'More',
+                          fontSize: 12,
+                          icon: result[1]
+                        }
+                      }
+                    },
+                  },
+                  {
+                    component: {
+                      name: 'ListedAnime',
+                      options: {
+                        bottomTab: {
+                          text: 'To Watch',
+                          fontSize: 12,
+                          icon: result[2]
+                        }
+                      }
+                    },
+                  },
+                ],
+              }
             }
-        }
-    });
-});
+          });
+        
+    })
