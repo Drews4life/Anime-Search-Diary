@@ -4,16 +4,22 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  ImageBackground,
-  CheckBox
 } from 'react-native'
 
 import { connect } from 'react-redux'
 import Filter from '../../components/Filter'
 import RadioGroup from 'react-native-radio-buttons-group';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconIonicons from 'react-native-vector-icons/Ionicons'
+import { Navigation } from 'react-native-navigation'
 
 import styles from './styles'
+import { 
+  addEpisodeSeen, 
+  substractEpisodesSeen,
+  finishedEpisode,
+  unfinishedEpisode 
+} from '../../actions';
 
 class ListedAnime extends Component {
   
@@ -75,7 +81,23 @@ class ListedAnime extends Component {
     return data;
   }
 
+  navigate = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'CreateFavorite',
+        options: {
+          topBar: {
+            title: {
+              text: 'Create new'
+            }
+          }
+        }
+      },
+    })
+  }
+
   render() {
+
     return (
       <View style={styles.container}>
         <View>
@@ -92,6 +114,9 @@ class ListedAnime extends Component {
               onPress={this.onRadioButtonPress}
             />
           </View>
+          <TouchableOpacity style={styles.newButton} onPress={this.navigate}>
+            <Text style={styles.whiteTxt}>ADD NEW</Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList 
@@ -109,18 +134,19 @@ class ListedAnime extends Component {
                 </View>
                 
                 <View style={styles.episodesField}>
+                  <Text style={styles.midText}>Type: {item.type}</Text>
                   <Text style={styles.midText}>
-                    Episodes Seen: {item.episodesSeen}{`/${item.episodes || '?' }`}
+                    {item.type === 'Manga' ? `Pages read: ${item.pagesRead}/${item.pages || '?'}` : `Episodes Seen: ${item.episodesSeen}${`/${item.episodes || '?' }`}`}
                   </Text>
 
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity onPress={() => this.props.addSeen(item.id, item.type)}>
                     <IconEntypo 
                       name="squared-plus"
                       size={25}
                     />
                   </TouchableOpacity>
 
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.props.removeSeen(item.id, item.type)}>
                   <IconEntypo 
                       name="squared-minus"
                       size={25}
@@ -129,13 +155,36 @@ class ListedAnime extends Component {
                   </TouchableOpacity>
                 </View>
 
-                <View>
-                  <RadioGroup 
-                    flexDirection='row'
-                    radioButtons={this.state.valueForOne}
-                    onPress={() => {}}
-                  />
+                <View style={{alignSelf: 'center', flexDirection: 'row', marginTop: 10}}>
+                  <Text style={styles.midText}>is Finished ?</Text>
+                  {
+                    item.finished ? (
+                      <TouchableOpacity onPress={() => this.props.unfinish(item.id)}>
+                        <IconIonicons 
+                          name="ios-radio-button-on"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity onPress={() => this.props.finish(item.id)}>
+                        <IconIonicons 
+                          name="ios-radio-button-off"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                    )
+                  }
                 </View>
+
+                {
+                  item.url !== null && item.url !== undefined ? (
+                    <View style={{alignSelf: 'center'}}>
+                      <TouchableOpacity onPress={() => {}}>
+                        <Text style={[styles.midText, {color: 'blue', marginTop: 15}]}>Link</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : null
+                }
               </View>
             )
           }}
@@ -149,4 +198,11 @@ const mapStateToProps = state => ({
   favorites: Object.values(state.animeData.favorites)
 })
 
-export default connect(mapStateToProps)(ListedAnime)
+const mapDispatchToProps = dispatch => ({
+  addSeen: (id, type) => dispatch(addEpisodeSeen(id, type)),
+  removeSeen: (id, type) => dispatch(substractEpisodesSeen(id, type)),
+  finish: (id) => dispatch(finishedEpisode(id)),
+  unfinish: (id) => dispatch(unfinishedEpisode(id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListedAnime)

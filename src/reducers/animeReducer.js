@@ -5,7 +5,8 @@ import {
     GET_FAVORITE,
     SAVE_TO_STORAGE,
     DELETE_FROM_STORAGE,
-    GET_ADDITIONAL_PAGE
+    GET_ADDITIONAL_PAGE,
+    ADD_EPISODES_SEEN
 } from "../types";
 
 const INITIAL_STATE = {
@@ -26,7 +27,6 @@ export default (state = INITIAL_STATE, action) => {
         case DELETE_FROM_STORAGE:
             return {...state, favorites: action.payload}
         case GET_ADDITIONAL_PAGE:
-            console.log('reducers data: ', [...state.animeTop, action.payload])
             return {...state, animeTop: [...state.animeTop, ...action.payload]}
         case LOADING_ANIMES: 
             return {...state, isLoading: true}

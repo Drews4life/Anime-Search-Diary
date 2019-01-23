@@ -20,7 +20,7 @@ Promise.all([
         Navigation.setRoot({
             root: {
               bottomTabs: {
-                id: 'BottomTabsId',
+                id: 'BottomTabsId',               
                 children: [
                   {
                     component: {
@@ -47,17 +47,33 @@ Promise.all([
                     },
                   },
                   {
-                    component: {
-                      name: 'ListedAnime',
-                      options: {
-                        bottomTab: {
-                          text: 'To Watch',
-                          fontSize: 12,
-                          icon: result[2]
-                        }
-                      }
-                    },
-                  },
+                    stack: {
+                      children: [
+                        {
+                          component: {
+                            name: 'ListedAnime',
+                            options: {
+                              bottomTab: {
+                                text: 'To Watch',
+                                fontSize: 12,
+                                icon: result[2]
+                              },
+                              topBar: {
+                                visible: false
+                              }
+                            },
+                            children: [
+                              {
+                                component: {
+                                  name: 'CreateFavorite'
+                                }
+                              }
+                            ]
+                          },
+                        },
+                      ]
+                    }
+                  }
                 ],
               }
             }

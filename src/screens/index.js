@@ -3,9 +3,10 @@ import { Navigation } from 'react-native-navigation'
 
 import HomeScreen from './HomeScreen'
 import TopScreen from './TopScreen';
+import CreateFavScreen from './CreateFavScreen'
+import ListedAnime from './ListedAnimeScreen';
 
 import Provider from '../Provider';
-import ListedAnime from './ListedAnimeScreen';
 
 function WrappedComponent(Component) {
     return function inject(props) {
@@ -25,4 +26,5 @@ export default () => {
     Navigation.registerComponent('Home', () => WrappedComponent(HomeScreen))
     Navigation.registerComponent('ListedAnime', () => WrappedComponent(ListedAnime))
     Navigation.registerComponent('Top', () => WrappedComponent(TopScreen))
+    Navigation.registerComponent('CreateFavorite', () => WrappedComponent(CreateFavScreen))
 }

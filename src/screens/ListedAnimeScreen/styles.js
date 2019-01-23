@@ -15,8 +15,8 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     card: {
-        width: width * .85,
-        height: height * .35,
+        width: width * .9,
+        height: height * .3,
         backgroundColor: '#e8e9ea',
         marginVertical: 10,
     },
@@ -28,7 +28,7 @@ export default StyleSheet.create({
     midText: {
         fontSize: 16,
         fontWeight: '500',
-        marginLeft: 10,
+        marginLeft: 3,
         marginRight: 15
     },
     touchableWrapper: {
@@ -46,5 +46,17 @@ export default StyleSheet.create({
         alignSelf: 'center',
         fontSize: 22,
         fontWeight: 'bold'
+    },
+    newButton: {
+        width: width * .9,
+        height: height * .05,
+        backgroundColor: 'rgb(0, 131, 255)',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    whiteTxt: {
+        color: 'rgb(255,255,255)',
+        fontWeight: '400',
+        fontSize: 20
     }
 })

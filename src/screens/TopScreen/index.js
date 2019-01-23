@@ -59,6 +59,7 @@ class ListedAnime extends Component {
 
 
   render() {
+     //AsyncStorage.removeItem('favorites')
       console.log('is laoding: ', this.props.isLoading)
     return (
       <View>
@@ -112,7 +113,7 @@ class ListedAnime extends Component {
                                     <Text style={styles.additionalDataText}>Score: {item.score}/10</Text>
                                     <Text style={styles.additionalDataText}>Type: {item.type}</Text>
                                     <Text style={styles.additionalDataText}>Rank: {item.rank}</Text>
-                                    <Text style={styles.additionalDataText}>Episodes: {item.episodes || '?'}</Text>
+                                    <Text style={styles.additionalDataText}>{item.type === 'Manga' ? `` : `Episodes: ${item.episodes || '?'}`}</Text>
                                 </View>
 
                                 <View style={styles.buttonsHolder}>

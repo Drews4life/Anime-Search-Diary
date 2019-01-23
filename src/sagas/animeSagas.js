@@ -62,17 +62,27 @@ function* saveToFavoriteSaga(action) {
         mal_id,
         title,
         url,
-        episodes
+        episodes,
+        type,
+        pages
     } = action.payload;
 
-    const newFavorite = {
+    const newFav = {
         id: mal_id,
-        episodesSeen: 0,
+        type,
         title,
         url,
-        episodes,
         finished: false
     }
+
+    let newFavorite = {}
+    
+    if(newFav.type === 'Manga') {
+        newFavorite = {...newFav, pagesRead: 0, pages}
+    } else {
+        newFavorite = {...newFav, episodes, episodesSeen: 0}
+    }
+
     const state = yield select();
     const saveStorage = {...state.animeData.favorites, newFavorite}
     console.log('state ---: ', state.animeData.favorites)
