@@ -14,7 +14,7 @@ import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const {height, width} = Dimensions.get('window')
 
 export default props => (
-    <View style={styles.container}>
+    <View style={[styles.container, props.addViewStyles]}>
         <IconEvilIcons 
             name="search" 
             size={20}
@@ -25,15 +25,20 @@ export default props => (
             value={props.value}
             onChangeText={props.onChangeText}
             placeholder={props.placeholder || 'Search'}
+            keyboardType={props.keyboardType || 'default'}
             underlineColorAndroid="transparent"
         />
-        <TouchableOpacity onPress={props.onCancel}>
-            <IconMaterialIcons 
-                name={'cancel'} 
-                size={20}
-                style={styles.icon}
-            />
-        </TouchableOpacity>
+        {
+           props.showCancel ? (
+            <TouchableOpacity onPress={props.onCancel}>
+                <IconMaterialIcons 
+                    name={'cancel'} 
+                    size={20}
+                    style={styles.icon}
+                />
+             </TouchableOpacity>
+            ) : null
+        }
     </View>
 )
 

@@ -126,11 +126,11 @@ class ListedAnime extends Component {
           contentContainerStyle={styles.innerListContainer}
           keyExtractor={item => `${item.id}`}
           renderItem={({item}) => {
-            console.log('item FL: ', item)
+            //console.log('item FL: ', item)
             return (
               <View style={styles.card}>
                 <View style={styles.headerWrapper}>
-                  <Text style={styles.headerText}>{item.title}</Text>
+                  <Text style={[styles.headerText, {textAlign: 'center'}]}>{item.title}</Text>
                 </View>
                 
                 <View style={styles.episodesField}>

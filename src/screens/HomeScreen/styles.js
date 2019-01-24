@@ -88,5 +88,12 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-end',
         
+    },
+    shortenFilter: {
+        width: width * .4,
+        marginHorizontal: 10,
+    },
+    shortenInput: {
+        width: width * .2
     }
 })

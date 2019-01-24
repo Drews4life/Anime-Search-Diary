@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Linking
 } from 'react-native'
+import ListItem from '../../components/ListItem'
 
 import { connect } from 'react-redux'
 import { Dropdown } from 'react-native-material-dropdown'
@@ -46,17 +47,7 @@ class ListedAnime extends Component {
     this.props.fetchFavorite();
   }
 
-  handleURlPress = url => {
-    Linking.canOpenURL(url).then(supported => {
-        if (supported) {
-          Linking.openURL(url);
-        } else {
-          console.log("Don't know how to open URI: " + this.props.url);
-        }
-      })
-      .catch(e => console.log('e: ', e))
-  }
-
+  
 
   render() {
      //AsyncStorage.removeItem('favorites')
@@ -78,7 +69,6 @@ class ListedAnime extends Component {
         <FlatList 
                 data={this.props.anime}
                 extraData={this.props}
-                refreshing={this.props.isLoading}
                 refreshControl={
                     <RefreshControl
                       refreshing={this.props.isLoading}
@@ -93,57 +83,7 @@ class ListedAnime extends Component {
                     )
                 }}
                 keyExtractor={({mal_id}) => `${mal_id}`}
-                renderItem={({item, index}) => {
-                    //console.log('each item: ', item)
-                    
-                    return (
-                        <View style={[styles.cardHolder, index === this.props.anime.length - 1 ? {marginBottom: 120} : {}]}>
-                            <View style={styles.imageHolder}>
-                                <ImageBackground
-                                    style={styles.image}
-                                    source={{ uri: item.image_url}}
-                                />
-                            </View>
-                            <View style={styles.headerView}>
-                                <Text style={styles.headerText}>{item.title}</Text>
-                            </View>
-                            <View style={styles.lowerDataset}>
-                                <View style={styles.additionalDataHolder}>
-                                    <Text style={styles.additionalDataText}>Ended: {item.end_date || 'Ongoing'}</Text>
-                                    <Text style={styles.additionalDataText}>Score: {item.score}/10</Text>
-                                    <Text style={styles.additionalDataText}>Type: {item.type}</Text>
-                                    <Text style={styles.additionalDataText}>Rank: {item.rank}</Text>
-                                    <Text style={styles.additionalDataText}>{item.type === 'Manga' ? `` : `Episodes: ${item.episodes || '?'}`}</Text>
-                                </View>
-
-                                <View style={styles.buttonsHolder}>
-                                    <TouchableOpacity onPress={() => {
-                                        if(this.props.favorites.hasOwnProperty(item.mal_id)) {
-                                            this.props.deleteFromFavorite(item.mal_id)
-                                        } else {
-                                            this.props.addToFavorite(item)
-                                        }
-                                    }}>
-                                        <IconAntDesign 
-                                            name='heart' 
-                                            size={25} 
-                                            style={{marginLeft: 25}}
-                                            color={this.props.favorites.hasOwnProperty(item.mal_id) ? 'red' : 'black'}
-                                        /> 
-                                    </TouchableOpacity>
-                                    
-                                    <TouchableOpacity onPress={() => this.handleURlPress(item.url)}>
-                                        <IconAntDesign 
-                                            name='sharealt' 
-                                            size={25} 
-                                            style={{marginLeft: 25}}
-                                        />  
-                                    </TouchableOpacity>   
-                                </View>
-                            </View>
-                        </View>
-                    )
-                }}
+                renderItem={({item, index}) => (<ListItem item={item}  index={index} length={this.props.anime.length} />)}
             />
       </View>
     )

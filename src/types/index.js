@@ -14,3 +14,7 @@ export const ADD_EPISODES_SEEN = 'add_episodes_seen'
 export const SUBTRACT_EPISODES_SEEN = 'subtract_episodes_seen'
 export const FINISH_EP = 'finish_ep'
 export const UNFINISH_EP = 'unfinish_ep'
+export const SEARCH_ANIME_BY_TYPE = 'search_anime_by_type'
+export const SAVE_SEARCHED_ANIME = 'save_searched_anime';
+export const START_SEARCH_BY_TYPE_LODAING = 'start_search_by_type_loading'
+export const BAD_REQUEST = 'bad_request'

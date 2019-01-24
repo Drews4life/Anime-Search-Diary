@@ -33,12 +33,14 @@ class CreateFav extends Component {
         titleName: '',
         episodes: '',
         link: '',
-        selectedType: ''
+        selectedType: '',
+        errorType: false,
+        errorTitle: false
     }
 
     onInputValChange = (input, val) => {
         this.setState(
-            prevState => ({ ...prevState, [input]: val })
+            prevState => ({ ...prevState, [input]: val,  errorTitle: false, errorType: false })
         )
     }
 
@@ -52,13 +54,13 @@ class CreateFav extends Component {
 
         console.log('isNum: ', isNum)
         this.setState(
-            prevState => ({ ...prevState, episodes: isNum ? val : '' })
+            prevState => ({ ...prevState, episodes: isNum ? val : '',  errorTitle: false, errorType: false })
         )
     }
 
     onChangeDropDown = val => {
         this.setState(
-            prevState => ({...prevState, selectedType: val})
+            prevState => ({...prevState, selectedType: val, errorTitle: false, errorType: false})
         )
     }
 
@@ -86,6 +88,14 @@ class CreateFav extends Component {
 
             this.props.saveToFavorite(newFavorite)
             Navigation.pop(this.props.componentId)
+        } else {
+            this.setState(
+                prevState => ({
+                    ...prevState,    
+                    errorTitle: this.state.titleName.trim() === '',
+                    errorType: this.state.selectedType.trim() === ''
+                })
+            )
         }
     }
 
@@ -99,7 +109,7 @@ class CreateFav extends Component {
                             autoCorrect={false}
                             value={this.state.titleName}
                             onChangeText={val => this.onInputValChange('titleName', val)}
-                            style={[styles.inputsSame]}
+                            style={[styles.inputsSame, this.state.errorTitle ? styles.errorTitle : {}]}
                             placeholder='Title name'
                             underlineColorAndroid="transparent"
                         />
@@ -116,7 +126,7 @@ class CreateFav extends Component {
                         <Dropdown
                             onChangeText={this.onChangeDropDown}
                             label={'Title type'}
-                            containerStyle={styles.dropDownBig}
+                            containerStyle={[styles.dropDownBig, this.state.errorType ? styles.errorTitle : {}]}
                             data={this.state.seriesTypes}
                         />
                         <TextInput

@@ -23,13 +23,20 @@ export default StyleSheet.create({
 
     },
     dropDownBig: {
-        width: width * .9
+        width: width * .9,
+        paddingHorizontal: 5
     },
     inputsSame: {
         width: width * .9,
         height: height * .045,
         marginVertical: 10,
         fontWeight: '500',
-        fontSize: 20
-    }
+        fontSize: 20,
+        paddingHorizontal: 5
+    },
+    errorTitle: {
+        borderRadius: 5,
+        borderColor: 'rgb(206, 0, 0)',
+        backgroundColor: 'rgb(255, 201, 201)'
+    },
 })
