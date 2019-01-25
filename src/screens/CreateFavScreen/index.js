@@ -19,7 +19,8 @@ import styles from './styles';
 
 
 class CreateFav extends Component {
-
+    
+    
     state = {
         seriesTypes: [{
             value: 'Manga'

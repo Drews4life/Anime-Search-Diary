@@ -105,6 +105,7 @@ class ListedAnime extends Component {
             placeholder="Search"
             value={this.state.filter}
             onChangeText={this.onFilterChange}
+            showCancel
             onCancel={() => this.onFilterChange('')}
           />
           <View>

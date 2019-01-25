@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "sudo node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "ios": "react-native run-ios --simulator=\"iPhone 6s\"",
-    "android": "react-native run-android"
+    "android": "cd ./android && sudo ./gradlew app:assembleDebug && sudo ./gradlew installDebug",
+    "android:release": "react-native run-android --variant=release",
+    "android:build": "cd android && sudo ./gradlew app:assembleRelease"
   },
   "dependencies": {
     "axios": "^0.18.0",

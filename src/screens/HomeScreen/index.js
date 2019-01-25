@@ -22,6 +22,7 @@ import { getIdForGenre } from '../../utils';
 
 class Home extends React.Component {
 
+
     state = {
         filterValue: '',
         secondFilterVal: '',

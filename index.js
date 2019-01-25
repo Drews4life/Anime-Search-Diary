@@ -59,14 +59,15 @@ Promise.all([
                                 icon: result[2]
                               },
                               topBar: {
-                                visible: false
+                                visible: false,
+                                height: 0,
                               }
                             },
                             children: [
                               {
                                 component: {
                                   name: 'CreateFavorite'
-                                }
+                                },                               
                               }
                             ]
                           },

@@ -1,4 +1,8 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { 
+    StyleSheet, 
+    Dimensions,
+    Platform 
+} from 'react-native'
 
 const { height, width } = Dimensions.get('window')
 
@@ -32,7 +36,8 @@ export default StyleSheet.create({
         marginVertical: 10,
         fontWeight: '500',
         fontSize: 20,
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        paddingVertical: Platform.OS === 'android' ? 5 : 0,
     },
     errorTitle: {
         borderRadius: 5,

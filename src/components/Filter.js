@@ -5,7 +5,8 @@ import {
     StyleSheet,
     TextInput,
     Dimensions,
-    TouchableOpacity 
+    TouchableOpacity,
+    Platform 
 } from 'react-native'
 
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -21,7 +22,11 @@ export default props => (
             style={styles.icon}
         />
         <TextInput 
-            style={[styles.input, props.inputStyles]}
+            style={[
+                styles.input, 
+                Platform.OS === 'android' ? {paddingVertical: 5} : {},
+                props.inputStyles
+            ]}
             value={props.value}
             onChangeText={props.onChangeText}
             placeholder={props.placeholder || 'Search'}
